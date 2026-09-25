@@ -1,5 +1,4 @@
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
+package main.java;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
