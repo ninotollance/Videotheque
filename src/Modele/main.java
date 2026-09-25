@@ -3,15 +3,17 @@ package Modele;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
+import class Modele.FichierNumerique;
+
 public class main {
 
-    public static void main(String[] args) throws InterruptedException, JavaLayerException {
+    public static void main(String[] args) {
 
         Auteur test = new Auteur("Daft", "Punk");
         FichierNumerique albumTest = new FichierNumerique(
-                "Random Access Memories",
+                "Get lucky",
                 test,
-                LocalDate.of(2013, 5, 17),
+                LocalDate.of(2013, 1, 1),
                 1,
                 "MP3",
                 85.4,
