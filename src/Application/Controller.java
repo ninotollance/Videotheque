@@ -21,6 +21,9 @@ public class Controller {
         System.out.println("2. Lister tout les albums");
         System.out.println("3. Rechercher un album");
         System.out.println("4. Supprimer un album");
+        System.out.println("4. Ecouter un album");
+        System.out.println("4. Arrêter un album");
+        System.out.println("4. Convertire un album");
         System.out.println("0. Quitter");
     }
 
@@ -136,6 +139,10 @@ public class Controller {
         return LocalDate.parse(date, formatter);
     }
 
+    public String saisieChemin() throws FichierAudioException {
+        return
+    }
+
     public CompactDisque creerCD () throws SaisieInvalideException {
         Auteur a = saisieAuteur();
         String nom = saisieNomDisque();
@@ -157,9 +164,10 @@ public class Controller {
         String format = saisieFormat();
         double taille = saisieTailleFichier();
         int duree = saisieDuree();
+        String chemin = saisieChemin();
 
 
-        FichierNumerique fichierNumerique = new FichierNumerique(nom, a, date, quantite, format, taille, duree );
+        FichierNumerique fichierNumerique = new FichierNumerique(nom, a, date, quantite, format, taille, duree, chemin );
         return fichierNumerique;
     }
 

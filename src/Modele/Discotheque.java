@@ -114,4 +114,6 @@ public class Discotheque {
         getDiscotheque().remove(a);
         System.out.println("Album supprimé de la discothèque: " + a);
     }
+
+
 }

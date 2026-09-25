@@ -29,6 +29,15 @@ public class Main {
                     case 4:
                         c.supprimerAlbumParNom();
                         break;
+                    case 4:
+                        c.ecouterAlbum();
+                        break;
+                    case 4:
+                        //c.arreterLecture();
+                        break;
+                    case 4:
+                        //c.convertirAlbumMP3enAAC();
+                        break;
                     case 0:
                         System.out.println("Au revoir !");
                         break;
@@ -38,7 +47,7 @@ public class Main {
 
                 System.out.println();
             } catch (DiscothequeVideException | SaisieInvalideException | DoublonException | AlbumIntrouvableException | DateFormatException |
-                     DateTimeException e) {
+                     DateTimeException | FichierAudioException e) {
                 System.out.println("Erreur: "+ e.getMessage() + " (" + e.getClass().getSimpleName() + ")");
             } catch (InputMismatchException e){
                 System.out.println("Erreur: " + e.getClass().getSimpleName());

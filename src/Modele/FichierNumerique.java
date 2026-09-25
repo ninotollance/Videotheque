@@ -9,12 +9,14 @@ public class FichierNumerique extends Album {
     private String format;
     private double taille;
     private int duree;
+    private String chemin;
 
-    public FichierNumerique(String nom, Auteur auteur, LocalDate annee, int quantite, String format, double taille, int duree) {
+    public FichierNumerique(String nom, Auteur auteur, LocalDate annee, int quantite, String format, double taille, int duree, String chemin) {
         super(nom, auteur, annee, quantite);
         this.format = format;
         this.taille = taille;
         this.duree = duree;
+        this.chemin = chemin;
     }
 
     public String getFormat() {
@@ -39,6 +41,14 @@ public class FichierNumerique extends Album {
 
     public void setDuree(int duree) {
         this.duree = duree;
+    }
+
+    public String getChemin() {
+        return chemin;
+    }
+
+    public void setChemin(String chemin) {
+        this.chemin = chemin;
     }
 
     public String getSupport() {
