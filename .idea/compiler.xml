@@ -9,8 +9,5 @@
         <module name="Sono" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Sono" target="26" />
-    </bytecodeTargetLevel>
   </component>
 </project>

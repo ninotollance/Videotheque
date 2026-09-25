@@ -12,12 +12,19 @@ public class FichierNumerique extends Album {
     private int duree;
     private String chemin;
 
+
     public FichierNumerique(String nom, Auteur auteur, LocalDate annee, int quantite, String format, double taille, int duree, String chemin) {
         super(nom, auteur, annee, quantite);
         this.format = format;
         this.taille = taille;
         this.duree = duree;
         this.chemin = chemin;
+    }
+
+
+
+    public java.io.File getFichier() {
+        return new java.io.File(chemin);
     }
 
     public String getFormat() {
