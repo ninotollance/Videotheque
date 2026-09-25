@@ -234,7 +234,5 @@ public class Controller {
         String n = saisieNomDisque();
         FichierNumerique fn = Discotheque.ecouterAlbum(n);
 
-
-
     }
 }
