@@ -1,6 +1,7 @@
 package Modele;
 
 import Modele.Abstract.Album;
+import java.io.File;
 
 import java.time.LocalDate;
 
@@ -57,7 +58,7 @@ public class FichierNumerique extends Album {
 
     @Override
     public String toString() {
-        return  this.getSupport() + " " + this.getFormat() + " " + this.getTaille() + " Mo " + this.getDuree() + " min " + super.toString();
+        return  this.getSupport() + " " + this.getFormat() + " " + this.getTaille() + " Mo " + this.getDuree() + " min " + this.getChemin() + " "  + super.toString();
         /**return "Album{" +
          "nom='" + nom + '\'' +
          ", auteur=" + auteur +

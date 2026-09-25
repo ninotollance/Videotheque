@@ -4,6 +4,7 @@ import Exceptions.*;
 import Modele.*;
 import Modele.Abstract.Album;
 
+import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -140,7 +141,8 @@ public class Controller {
     }
 
     public String saisieChemin() throws FichierAudioException {
-        return
+        String chemin = "src/main/resources/paintItBlack.mp3";
+        return chemin;
     }
 
     public CompactDisque creerCD () throws SaisieInvalideException {
@@ -220,12 +222,19 @@ public class Controller {
     Discotheque.supprimerAlbum(n);
     }
 
-
-
     public void rechercherAlbum() throws DiscothequeVideException, AlbumIntrouvableException, SaisieInvalideException {
         scan.nextLine();
         String n= saisieNomDisque();
 
         Discotheque.rechercherAlbum(n);
+    }
+
+    public void ecouterAlbum() throws DiscothequeVideException, AlbumIntrouvableException, SaisieInvalideException, FichierAudioException {
+        scan.nextLine();
+        String n = saisieNomDisque();
+        FichierNumerique fn = Discotheque.ecouterAlbum(n);
+
+
+
     }
 }

@@ -29,7 +29,7 @@ public class Main {
                     case 4:
                         c.supprimerAlbumParNom();
                         break;
-                    case 4:
+                    case 5:
                         c.ecouterAlbum();
                         break;
                     case 4:
