@@ -32,10 +32,10 @@ public class Main {
                     case 5:
                         c.ecouterAlbum();
                         break;
-                    case 4:
+                    case 6:
                         //c.arreterLecture();
                         break;
-                    case 4:
+                    case 7:
                         //c.convertirAlbumMP3enAAC();
                         break;
                     case 0:

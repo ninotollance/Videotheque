@@ -22,9 +22,9 @@ public class Controller {
         System.out.println("2. Lister tout les albums");
         System.out.println("3. Rechercher un album");
         System.out.println("4. Supprimer un album");
-        System.out.println("4. Ecouter un album");
-        System.out.println("4. Arrêter un album");
-        System.out.println("4. Convertire un album");
+        System.out.println("5. Ecouter un album");
+        System.out.println("6. Arrêter un album");
+        System.out.println("7. Convertire un album");
         System.out.println("0. Quitter");
     }
 
