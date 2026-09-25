@@ -68,12 +68,12 @@ public class Discotheque {
         System.out.println("Album supprimé de la discothèque: " + a);
     }
 
-    public static FichierNumerique ecouterAlbum(String nom) throws AlbumIntrouvableException, DiscothequeVideException, FichierAudioException {
+    public static void ecouterAlbum(String nom) throws AlbumIntrouvableException, DiscothequeVideException, FichierAudioException {
         Album a = rechercherAlbum(nom);
         if (!(a instanceof FichierNumerique)) {
             throw new FichierAudioException("Ce fichier n'est pas lisible ! ");
         }
-        return (FichierNumerique) a;
+
     }
 
 }
