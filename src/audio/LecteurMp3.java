@@ -1,7 +1,11 @@
-import Exceptions.AlbumIntrouvableException;
+package audio;
+
 import Exceptions.FichierAudioException;
 import Modele.FichierNumerique;
+import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
+
+import java.io.FileNotFoundException;
 
 public class LecteurMp3 implements Runnable {
 
@@ -25,14 +29,44 @@ public class LecteurMp3 implements Runnable {
     public void demarrer() {
 
         thread = new Thread(this);
+        thread.setName("Lecteur-" + album.getNom());
+        thread.setDaemon(true);
         thread.start();
 
     }
 
     @Override
     public void run() {
+
         try {
-            java.io.FileInputStream fichier =
+            java.io.FileInputStream fichier = new java.io.FileInputStream(album.getFichier());
+            lecteurmp3 = new Player(fichier);
+            lecteurmp3.play();
+        } catch (FileNotFoundException e) {
+            System.out.println("Le fichier est introuvable!");
+        } catch (JavaLayerException e) {
+            System.out.println("Impossible de lire le fichier!");
         }
+
+    }
+
+    public void arreter() {
+
+        if (lecteurmp3 != null) {
+            lecteurmp3.close();
+        }
+    }
+
+    public boolean enCours() {
+
+        return thread != null && thread.isAlive();
+    }
+
+    public int getPosition() {
+
+        if (lecteurmp3 == null) {
+            return 0;
+        }
+        return lecteurmp3.getPosition();
     }
 }
