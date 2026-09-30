@@ -4,6 +4,8 @@ import Exceptions.*;
 import java.time.DateTimeException;
 import java.util.InputMismatchException;
 
+import audio.LecteurMp3;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -29,20 +31,20 @@ public class Main {
                     case 4:
                         c.supprimerAlbumParNom();
                         break;
-                    case 4:
+                    case 5:
                         c.ecouterAlbum();
                         break;
-                    case 4:
-                        //c.arreterLecture();
+                    case 6:
+                        c.arreterLecture();
                         break;
-                    case 4:
-                        //c.convertirAlbumMP3enAAC();
+                    case 7:
+                        c.convertirAlbum();
                         break;
                     case 0:
-                        System.out.println("Au revoir !");
+                        System.out.println("Au revoir!");
                         break;
                     default:
-                        System.out.println("Choix invalide, veuillez réessayer.");
+                        System.out.println("Choix invalide, veuillez réessayer");
                 }
 
                 System.out.println();
