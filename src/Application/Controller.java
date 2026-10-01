@@ -228,8 +228,6 @@ public class Controller {
     Discotheque.supprimerAlbum(n);
     }
 
-
-
     public void rechercherAlbum() throws DiscothequeVideException, AlbumIntrouvableException, SaisieInvalideException {
         scan.nextLine();
         String n= saisieNomDisque();
