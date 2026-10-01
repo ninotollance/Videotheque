@@ -7,13 +7,14 @@ import audio.LecteurMp3;
 import audio.ConvertisseurAudio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Controller {
 
+    LecteurMp3 nouveauLecteur;
+
     public static Scanner scan = new Scanner(System.in);
-    private static LecteurMp3 lecteur;
+
 
     //TODO affichage du menu
     // Affiche le menu principal
@@ -238,9 +239,10 @@ public class Controller {
 
     // Partie gestion d'un fichier audio
 
-    public void ecouterAlbum() throws SaisieInvalideException, DiscothequeVideException, AlbumIntrouvableException {
+    public void ecouterAlbum(LecteurMp3 lecteur) throws SaisieInvalideException, DiscothequeVideException, AlbumIntrouvableException {
         scan.nextLine();
         String nom = saisieNomDisque();
+
         Album album = Discotheque.rechercherAlbum(nom);
 
         if (!(album instanceof FichierNumerique)) {
@@ -251,18 +253,19 @@ public class Controller {
         if (lecteur != null && lecteur.enCours()) {
             lecteur.arreter();
         }
-        lecteur = new LecteurMp3((FichierNumerique) album);
+        lecteur.setAlbum((FichierNumerique)album);
         lecteur.demarrer();
         System.out.println("Lecture lancée");
+
     }
 
-    public void arreterLecture() {
-        if (lecteur == null || !lecteur.enCours()) {
+    public void arreterLecture(LecteurMp3 lecteurActuel) {
+        if (lecteurActuel == null || !lecteurActuel.enCours()) {
             System.out.println("Aucune lecture en cours");
             return;
         }
-        int position = lecteur.getPosition();
-        lecteur.arreter();
+        int position = lecteurActuel.getPosition();
+        lecteurActuel.arreter();
         System.out.println("Lecture arrêtée à " + position / 1000 + " s");
     }
 

@@ -11,6 +11,7 @@ public class LecteurMp3 implements Runnable {
 
     private FichierNumerique album;
     private volatile Player lecteurmp3;
+    private volatile boolean arretDemande = false;
     private Thread thread;
 
     public LecteurMp3(FichierNumerique album) {
@@ -26,7 +27,14 @@ public class LecteurMp3 implements Runnable {
 
     }
 
+    public LecteurMp3() {
+    }
+
     public void demarrer() {
+
+        if (enCours()) {
+            return;
+        }
 
         thread = new Thread(this);
         thread.setName("Lecteur-" + album.getNom());
@@ -41,7 +49,9 @@ public class LecteurMp3 implements Runnable {
         try {
             java.io.FileInputStream fichier = new java.io.FileInputStream(album.getFichier());
             lecteurmp3 = new Player(fichier);
-            lecteurmp3.play();
+            if (!arretDemande) {
+                lecteurmp3.play();
+            }
         } catch (FileNotFoundException e) {
             System.out.println("Le fichier est introuvable!");
         } catch (JavaLayerException e) {
@@ -52,6 +62,7 @@ public class LecteurMp3 implements Runnable {
 
     public void arreter() {
 
+        arretDemande = true;
         if (lecteurmp3 != null) {
             lecteurmp3.close();
         }
@@ -68,5 +79,37 @@ public class LecteurMp3 implements Runnable {
             return 0;
         }
         return lecteurmp3.getPosition();
+    }
+
+    public FichierNumerique getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(FichierNumerique album) {
+        this.album = album;
+    }
+
+    public Player getLecteurmp3() {
+        return lecteurmp3;
+    }
+
+    public void setLecteurmp3(Player lecteurmp3) {
+        this.lecteurmp3 = lecteurmp3;
+    }
+
+    public boolean isArretDemande() {
+        return arretDemande;
+    }
+
+    public void setArretDemande(boolean arretDemande) {
+        this.arretDemande = arretDemande;
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
     }
 }
