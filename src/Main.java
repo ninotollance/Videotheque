@@ -3,9 +3,14 @@ import Exceptions.*;
 
 import java.time.DateTimeException;
 import java.util.InputMismatchException;
+import audio.LecteurMp3;
 
 public class Main {
-    public static void main(String[] args) {
+
+    private static LecteurMp3 lecteur = new LecteurMp3();
+
+    public static void main(String[] args) throws DiscothequeVideException, AlbumIntrouvableException, DoublonException {
+
 
         Controller c = new Controller();
         int choix = -1;
@@ -30,19 +35,22 @@ public class Main {
                         c.supprimerAlbumParNom();
                         break;
                     case 5:
-                        c.ecouterAlbum();
+                        c.ecouterAlbum(lecteur);
                         break;
                     case 6:
-                        //c.arreterLecture();
+                        c.arreterLecture(lecteur);
                         break;
                     case 7:
-                        //c.convertirAlbumMP3enAAC();
+                        c.convertirAlbum();
                         break;
                     case 0:
-                        System.out.println("Au revoir !");
+                        if (lecteur != null && lecteur.enCours()) {
+                            lecteur.arreter();
+                        }
+                        System.out.println("Au revoir!");
                         break;
                     default:
-                        System.out.println("Choix invalide, veuillez réessayer.");
+                        System.out.println("Choix invalide, veuillez réessayer");
                 }
 
                 System.out.println();

@@ -3,16 +3,18 @@ package Application;
 import Exceptions.*;
 import Modele.*;
 import Modele.Abstract.Album;
-
-import java.io.FileInputStream;
+import audio.LecteurMp3;
+import audio.ConvertisseurAudio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Controller {
 
+    LecteurMp3 nouveauLecteur;
+
     public static Scanner scan = new Scanner(System.in);
+
 
     //TODO affichage du menu
     // Affiche le menu principal
@@ -24,7 +26,7 @@ public class Controller {
         System.out.println("4. Supprimer un album");
         System.out.println("5. Ecouter un album");
         System.out.println("6. Arrêter un album");
-        System.out.println("7. Convertire un album");
+        System.out.println("7. Convertir un album");
         System.out.println("0. Quitter");
     }
 
@@ -141,7 +143,11 @@ public class Controller {
     }
 
     public String saisieChemin() throws FichierAudioException {
-        String chemin = "src/main/resources/paintItBlack.mp3";
+        System.out.print("saisissez le chemin du fichier:");
+        String chemin = scan.nextLine();
+        if (chemin.isEmpty()) {
+            throw new FichierAudioException("chemin du fichier non saisi");
+        }
         return chemin;
     }
 
@@ -229,10 +235,50 @@ public class Controller {
         Discotheque.rechercherAlbum(n);
     }
 
-    public void ecouterAlbum() throws DiscothequeVideException, AlbumIntrouvableException, SaisieInvalideException, FichierAudioException {
-        scan.nextLine();
-        String n = saisieNomDisque();
-        FichierNumerique fn = Discotheque.ecouterAlbum(n);
+    // Partie gestion d'un fichier audio
 
+    public void ecouterAlbum(LecteurMp3 lecteur) throws SaisieInvalideException, DiscothequeVideException, AlbumIntrouvableException {
+        scan.nextLine();
+        String nom = saisieNomDisque();
+
+        Album album = Discotheque.rechercherAlbum(nom);
+
+        if (!(album instanceof FichierNumerique)) {
+            throw new FichierAudioException("L'album " + nom + " est un " + album.getSupport()
+                    + ". Seul un fichier audio peut être lu ou converti");
+        }
+
+        if (lecteur != null && lecteur.enCours()) {
+            lecteur.arreter();
+        }
+        lecteur.setAlbum((FichierNumerique)album);
+        lecteur.demarrer();
+        System.out.println("Lecture lancée");
+
+    }
+
+    public void arreterLecture(LecteurMp3 lecteurActuel) {
+        if (lecteurActuel == null || !lecteurActuel.enCours()) {
+            System.out.println("Aucune lecture en cours");
+            return;
+        }
+        int position = lecteurActuel.getPosition();
+        lecteurActuel.arreter();
+        System.out.println("Lecture arrêtée à " + position / 1000 + " s");
+    }
+
+    public void convertirAlbum() throws SaisieInvalideException, DiscothequeVideException, AlbumIntrouvableException {
+        scan.nextLine();
+        String nom = saisieNomDisque();
+        Album album = Discotheque.rechercherAlbum(nom);
+
+        if (!(album instanceof FichierNumerique)) {
+            throw new FichierAudioException("L'album " + nom + " est un " + album.getSupport()
+                    + ". Seul un fichier audio peut être lu ou converti");
+        }
+
+        System.out.println("Conversion en cours...");
+        ConvertisseurAudio.mp3VersAac((FichierNumerique) album);
+        System.out.println("Album converti : " + album);
     }
 }

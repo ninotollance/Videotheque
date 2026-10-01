@@ -2,29 +2,114 @@ package audio;
 
 import Exceptions.FichierAudioException;
 import Modele.FichierNumerique;
+import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class LecteurMp3 implements Runnable {
 
     private FichierNumerique album;
-    private volatile Player player;
+    private volatile Player lecteurmp3;
+    private volatile boolean arretDemande = false;
     private Thread thread;
+
+    public LecteurMp3(FichierNumerique album) {
+
+        if (!album.getFormat().equalsIgnoreCase("MP3")) {
+            throw new FichierAudioException("Le fichier n'est pas au bon format!");
+        }
+        if (!album.getFichier().exists()) {
+            throw new FichierAudioException("Le fichier audio est introuvable");
+        }
+
+        this.album = album;
+
+    }
+
+    public LecteurMp3() {
+    }
+
+    public void demarrer() {
+
+        if (enCours()) {
+            return;
+        }
+
+        thread = new Thread(this);
+        thread.setName("Lecteur-" + album.getNom());
+        thread.setDaemon(true);
+        thread.start();
+
+    }
 
     @Override
     public void run() {
-        try {
 
-            FileInputStream fichier = new FileInputStream("");
-            Player player = new Player(fichier);
-            player.play;
-        } catch (FichierAudioException e) {
-            throw new RuntimeException();
+        try {
+            java.io.FileInputStream fichier = new java.io.FileInputStream(album.getFichier());
+            lecteurmp3 = new Player(fichier);
+            if (!arretDemande) {
+                lecteurmp3.play();
+            }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException();
+            System.out.println("Le fichier est introuvable!");
+        } catch (JavaLayerException e) {
+            System.out.println("Impossible de lire le fichier!");
         }
-        System.out.println("");
+
+    }
+
+    public void arreter() {
+
+        arretDemande = true;
+        if (lecteurmp3 != null) {
+            lecteurmp3.close();
+        }
+    }
+
+    public boolean enCours() {
+
+        return thread != null && thread.isAlive();
+    }
+
+    public int getPosition() {
+
+        if (lecteurmp3 == null) {
+            return 0;
+        }
+        return lecteurmp3.getPosition();
+    }
+
+    public FichierNumerique getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(FichierNumerique album) {
+        this.album = album;
+    }
+
+    public Player getLecteurmp3() {
+        return lecteurmp3;
+    }
+
+    public void setLecteurmp3(Player lecteurmp3) {
+        this.lecteurmp3 = lecteurmp3;
+    }
+
+    public boolean isArretDemande() {
+        return arretDemande;
+    }
+
+    public void setArretDemande(boolean arretDemande) {
+        this.arretDemande = arretDemande;
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
     }
 }

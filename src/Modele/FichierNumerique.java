@@ -21,6 +21,7 @@ public class FichierNumerique extends Album {
         this.chemin = chemin;
     }
 
+
     public java.io.File getFichier() {
         return new java.io.File(chemin);
     }
